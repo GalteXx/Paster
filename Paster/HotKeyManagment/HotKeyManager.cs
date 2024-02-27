@@ -12,19 +12,18 @@ namespace Paster.HotKeyManagment
     internal class HotKeyManager
     {
         private const int windowsMessageHotkey = 0x0312;
-        private readonly MainWindow window;
+        private readonly nint hwnd;
 
         private readonly List<HotKey> hotKeys;
         
         
         public IEnumerable<HotKey> HotKeys => hotKeys;
 
-        public HotKeyManager(MainWindow _window)
+        public HotKeyManager(nint _hwnd)
         {
-            window = _window;
+            hwnd = _hwnd;
             hotKeys = new();
 
-            var hwnd = new WindowInteropHelper(window).Handle;
             HwndSource.FromHwnd(hwnd).AddHook(WndProc);
         }
 
@@ -45,7 +44,7 @@ namespace Paster.HotKeyManagment
         public bool RequestRegisterHotKey(KeyModifiers modifiers, Key key, Action action)
         {
             hotKeys.Add(new HotKey(hotKeys.Count > 0 ? hotKeys.Last().ID + 1 : 0, modifiers, key, action));
-            return RegisterHotKey(new WindowInteropHelper(window).Handle, hotKeys.Last().ID, modifiers, hotKeys.Last().VirtualKeyCode);
+            return RegisterHotKey(hwnd, hotKeys.Last().ID, modifiers, hotKeys.Last().VirtualKeyCode);
         }
 
         /// <summary>
@@ -55,7 +54,7 @@ namespace Paster.HotKeyManagment
         public bool RequestUnregisterHotKeys()
         {
             foreach (HotKey hotKey in hotKeys)
-                if (!UnregisterHotKey(new WindowInteropHelper(window).Handle, hotKey.ID))
+                if (!UnregisterHotKey(hwnd, hotKey.ID))
                     return false;
             return true;
         }
