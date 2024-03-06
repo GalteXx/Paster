@@ -36,7 +36,10 @@
         <TextBlock Grid.Row="1"
                    Text="{Binding Title, RelativeSource={RelativeSource AncestorType={x:Type local:PhraseControl}}}"
                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                   Margin="10"/>
-
+                   Margin="10" Foreground="White" Background="{x:Null}">
+        </TextBlock>
+        <Grid.InputBindings>
+            <MouseBinding Command="{Binding OnPressCommand, RelativeSource={RelativeSource AncestorType={x:Type local:PhraseControl}}}" MouseAction="LeftClick"/>
+        </Grid.InputBindings>
     </Grid>
 </UserControl>

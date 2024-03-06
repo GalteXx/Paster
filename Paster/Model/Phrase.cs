@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Paster.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Paster.Model
@@ -12,7 +14,7 @@ namespace Paster.Model
         private readonly string name;
         private readonly string text;
         
-        public ICommand InputSelf { get; }
+        public ICommand OutputContent { get; }
         public string Name { get => name; }
         public string Text { get => text; }
 
@@ -21,13 +23,13 @@ namespace Paster.Model
         {
             name = _name;
             text = _text;
-            InputSelf = new RoutedCommand("InputSelf", typeof(Phrase));
+            OutputContent = new RelayCommand(Output);
             
         }
 
-        private void ExecuteTypeSelf()
+        private void Output()
         {
-            OutputManager.Type(text);
+            Clipboard.SetText(text); 
         }
 
 

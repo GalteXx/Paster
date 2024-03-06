@@ -25,7 +25,8 @@
                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Controls:PhraseControl Title="{Binding Name}" Foreground="White" ToolTip="{Binding Text}"/>
+                    <Controls:PhraseControl Title="{Binding Name}" ToolTip="{Binding Text}" OnPressCommand="{Binding OutputContent}"
+                        Foreground="White"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
