@@ -1,4 +1,5 @@
 ﻿using Paster.Model;
+using Paster.Service;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -24,15 +25,13 @@ namespace Paster.ViewModel
 
         public MainWindowViewModel()
         {
-            phrases = new()
-            {
-                new Phrase("Hello", "Halo"),
-                new Phrase("World", "Welt")
-            };
+            PhrasesService phrasesService = new();
+            IEnumerable<Phrase> P = phrasesService.ParsePhrases();
+            phrases = new ObservableCollection<Phrase>(P);
 
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
