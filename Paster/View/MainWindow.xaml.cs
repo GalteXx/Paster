@@ -23,10 +23,17 @@ namespace Paster.View
                 Icon = new($"{Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)}/Resources/trayIcon.ico"),
                 Visible = true
             };
-            trayIcon.DoubleClick += delegate (object? sender, EventArgs args)
+            trayIcon.MouseClick += delegate (object? sender, Forms.MouseEventArgs e)
+            {
+                if(e.Button == Forms.MouseButtons.Left)
                 {
                     Maximize();
-                };
+                }
+                if(e.Button == Forms.MouseButtons.Right)
+                {
+                    Close();
+                }
+            };
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -38,10 +45,12 @@ namespace Paster.View
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (hotkeyManager.RequestUnregisterHotKeys())
-                base.OnClosing(e);
-            else
+            if (!hotkeyManager.RequestUnregisterHotKeys())
                 MessageBox.Show("Failed to unregister Hotkey... Closing anyway :D");
+            (DataContext as MainWindowViewModel)!.SavePhrases();
+            
+            base.OnClosing(e);
+                
         }
 
         protected override void OnStateChanged(EventArgs e)

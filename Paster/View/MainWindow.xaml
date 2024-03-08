@@ -8,7 +8,7 @@
         d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         ShowInTaskbar="False" WindowStyle="None" 
-        Title="MainWindow" Height="358" Width="231" Icon="/trayIcon.ico" Topmost="True" Background="#FF2E2E2E" 
+        Title="MainWindow" Height="358" Width="231" Topmost="True" Background="#FF2E2E2E" 
         Deactivated="Window_Deactivated">
     <Grid>
         <Grid.RowDefinitions>
@@ -22,7 +22,8 @@
         <Rectangle Fill="#FF1A1A1A" MouseDown="Rectangle_MouseDown"/>
         <ListView Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding Phrases}" Background="{x:Null}" 
                   d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.CanContentScroll="True" 
-                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Controls:PhraseControl Title="{Binding Name}" ToolTip="{Binding Text}" OnPressCommand="{Binding OutputContent}"
@@ -30,8 +31,5 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
-
-
     </Grid>
 </Window>

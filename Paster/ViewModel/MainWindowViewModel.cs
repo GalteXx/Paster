@@ -9,6 +9,8 @@ namespace Paster.ViewModel
     class MainWindowViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<Phrase> phrases;
+        PhrasesService phrasesService;
+
 
         public ObservableCollection<Phrase> Phrases
         {
@@ -25,10 +27,13 @@ namespace Paster.ViewModel
 
         public MainWindowViewModel()
         {
-            PhrasesService phrasesService = new();
-            IEnumerable<Phrase> P = phrasesService.ParsePhrases();
-            phrases = new ObservableCollection<Phrase>(P);
+            phrasesService = new();
+            phrases = new ObservableCollection<Phrase>(phrasesService.ParsePhrases());
+        }
 
+        public void SavePhrases()
+        {
+            phrasesService.SavePhrases(phrases);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
