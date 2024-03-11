@@ -12,21 +12,37 @@ namespace Paster.ViewModel
     {
         private readonly Action executableFunction;
 
-        public RelayCommand(Action executableFunction)
+        public RelayCommand(Action? executableFunction)
         {
-            this.executableFunction = executableFunction;
-        }
+            this.executableFunction = executableFunction!;
+        } 
 
         public event EventHandler? CanExecuteChanged;
 
-        public bool CanExecute(object? parameter)
-        {
-            return true;
-        }
+        public bool CanExecute(object? parameter) => true;
 
         public void Execute(object? parameter)
         {
             executableFunction.Invoke();
         }
     }
+
+    public class RelayCommand<T> : ICommand where T : class
+    {
+        private readonly Action<T?> executableFunction;
+        public RelayCommand(Action<T?> executableFunction)
+        {
+            this.executableFunction = executableFunction;
+        }
+
+        public event EventHandler? CanExecuteChanged;
+
+        public bool CanExecute(object? parameter) => true;
+
+        public void Execute(object? parameter)
+        {
+            executableFunction.Invoke(parameter as T);
+        }
+    }
+
 }

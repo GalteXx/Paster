@@ -50,7 +50,6 @@ namespace Paster.View
             (DataContext as MainWindowViewModel)!.SavePhrases();
             
             base.OnClosing(e);
-                
         }
 
         protected override void OnStateChanged(EventArgs e)
@@ -72,6 +71,11 @@ namespace Paster.View
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void PhraseControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
