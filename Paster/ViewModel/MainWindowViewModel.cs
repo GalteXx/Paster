@@ -15,6 +15,7 @@ namespace Paster.ViewModel
         private string inputText;
 
         public ICommand AddCommand { get; private set; }
+        public ICommand RemoveCommand { get; private set; }
         public string InputName
         {
             get
@@ -58,6 +59,7 @@ namespace Paster.ViewModel
             phrases = new ObservableCollection<Phrase>(phrasesService.ParsePhrases());
 
             AddCommand = new RelayCommand(AddPhrase);
+            RemoveCommand = new RelayCommand<Phrase>(RemovePhrase);
         }
 
         public void SavePhrases()
@@ -68,6 +70,13 @@ namespace Paster.ViewModel
         private void AddPhrase()
         {
             Phrases.Add(new Phrase(inputName, inputText));
+            inputName = "";
+            inputText = "";
+        }
+
+        private void RemovePhrase(Phrase? phrase)
+        {
+            Phrases.Remove(phrase!);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")

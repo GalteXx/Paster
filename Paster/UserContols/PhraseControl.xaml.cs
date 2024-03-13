@@ -3,28 +3,31 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Paster.Model;
+
+
 namespace Paster.UserContols
 {
     public partial class PhraseControl : UserControl, INotifyPropertyChanged
     {
 
-        public string Title
+        public ICommand RemoveCommand
         {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
+            get { return (ICommand)GetValue(RemoveCommandProperty); }
+            set { SetValue(RemoveCommandProperty, value); }
         }
 
-        public ICommand OnPressCommand
-        {
-            get { return (ICommand)GetValue(OnPressCommandProperty); }
-            set { SetValue(OnPressCommandProperty, value); }
-        }
-        
-        public static readonly DependencyProperty OnPressCommandProperty =
-            DependencyProperty.Register("OnPressCommand", typeof(ICommand), typeof(PhraseControl), null);
+        public static readonly DependencyProperty RemoveCommandProperty =
+            DependencyProperty.Register("RemoveCommand", typeof(ICommand), typeof(PhraseControl), null);
 
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(PhraseControl), new PropertyMetadata(""));
+        public Phrase BoundPhrase
+        {
+            get { return (Phrase)GetValue(BoundPhraseProperty); }
+            set { SetValue(BoundPhraseProperty, value); }
+        }
+
+        public static readonly DependencyProperty BoundPhraseProperty =
+            DependencyProperty.Register("BoundPhrase", typeof(Phrase), typeof(PhraseControl), null);
 
         public PhraseControl()
         {
@@ -42,6 +45,10 @@ namespace Paster.UserContols
             }
         }
 
+        private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            BoundPhrase.Output();
+        }
         private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             MouseHovered = true;
@@ -58,5 +65,7 @@ namespace Paster.UserContols
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+
     }
 }

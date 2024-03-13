@@ -4,12 +4,11 @@ using System.Windows.Input;
 
 namespace Paster.Model
 {
-    class Phrase
+    public class Phrase
     {
         private readonly string name;
         private readonly string text;
-        
-        public ICommand OutputContent { get; }
+
         public string Name { get => name; }
         public string Text { get => text; }
 
@@ -18,11 +17,9 @@ namespace Paster.Model
         {
             name = _name;
             text = _text;
-            OutputContent = new RelayCommand(Output);
-            
         }
 
-        private void Output()
+        public void Output()
         {
             Clipboard.SetText(text); 
         }

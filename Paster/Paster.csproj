@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="InputSimulator" Version="1.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="System.Drawing">
       <HintPath>..\..\..\..\..\..\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.2\ref\net8.0\System.Drawing.dll</HintPath>
     </Reference>

@@ -27,7 +27,7 @@ namespace Paster.ViewModel
         }
     }
 
-    public class RelayCommand<T> : ICommand where T : class
+    public class RelayCommand<T> : ICommand 
     {
         private readonly Action<T?> executableFunction;
         public RelayCommand(Action<T?> executableFunction)
@@ -41,7 +41,7 @@ namespace Paster.ViewModel
 
         public void Execute(object? parameter)
         {
-            executableFunction.Invoke(parameter as T);
+            executableFunction.Invoke((T?)parameter);
         }
     }
 
